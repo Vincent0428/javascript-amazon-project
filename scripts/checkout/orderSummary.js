@@ -6,10 +6,7 @@ import {
 } from '../../data/deliveryOptions.js';
 import { getProduct } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
-
-const today = dayjs();
-const deliveryDate = today.add(7, 'day');
-console.log(deliveryDate.format('dddd, MMMM D'));
+import { renderPaymentSummary } from './paymentSummary.js';
 
 export function renderOrderSummary() {
 	let cartSummaryHTML = '';
@@ -119,6 +116,7 @@ export function renderOrderSummary() {
 				`.ja-cart-item-container-${productId}`
 			);
 			container.remove();
+			renderPaymentSummary();
 		});
 	});
 
@@ -127,6 +125,7 @@ export function renderOrderSummary() {
 			const { productId, deliveryOptionId } = option.dataset;
 			updateDeliveryOption(productId, deliveryOptionId);
 			renderOrderSummary();
+			renderPaymentSummary();
 		});
 	});
 }
