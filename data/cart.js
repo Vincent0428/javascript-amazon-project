@@ -41,3 +41,10 @@ export function removeFromCart(productId) {
 	cart = cart.filter((product) => product.productId !== productId);
 	saveToStorage();
 }
+
+export function updateDeliveryOption(productId, deliveryOptionId) {
+	let matchingItem = cart.find((cartitem) => cartitem.productId === productId);
+	matchingItem.deliveryOptionId = deliveryOptionId;
+
+	saveToStorage();
+}
