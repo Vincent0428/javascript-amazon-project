@@ -1,6 +1,13 @@
-export let cart = localStorage.getItem('cart')
-	? JSON.parse(localStorage.getItem('cart'))
-	: [
+export let cart;
+
+loadFromStorage();
+
+export function loadFromStorage() {
+	cart = JSON.parse(localStorage.getItem('cart'));
+
+	// 这里是说如果cart不存在，但[]即空的cart是存在的
+	if (!cart) {
+		cart = [
 			{
 				productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
 				quantity: 2,
@@ -11,7 +18,9 @@ export let cart = localStorage.getItem('cart')
 				quantity: 1,
 				deliveryOptionId: '1',
 			},
-	  ];
+		];
+	}
+}
 
 function saveToStorage() {
 	localStorage.setItem('cart', JSON.stringify(cart));
