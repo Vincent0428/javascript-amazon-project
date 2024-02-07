@@ -10,6 +10,8 @@ function updateCartQuantity() {
 	document.querySelector('.js-cart-quantity').textContent = cartQuantity;
 }
 
+updateCartQuantity();
+
 let productsHTML = '';
 products.forEach((product) => {
 	productsHTML += `
