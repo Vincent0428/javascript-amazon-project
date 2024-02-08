@@ -1,8 +1,9 @@
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+// import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { updateItems } from '../checkout.js';
 import { cart, removeFromCart, updateDeliveryOption } from '../data/cart.js';
 import { deliveryOptions, getDeliveryOption } from '../data/deliveryOptions.js';
 import { getProduct } from '../data/products.js';
+import { getdeliveryDate } from '../utils/Date_time.js';
 import { formatCurrency } from '../utils/money.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 
@@ -16,9 +17,10 @@ export function renderOrderSummary() {
 		const deliverOptionId = cartItem.deliveryOptionId;
 		const deliveryOption = getDeliveryOption(deliverOptionId);
 
-		const today = dayjs();
-		const deliveryDate = today.add(deliveryOption.deliveryDays, 'day');
-		const dateString = deliveryDate.format('dddd, MMMM D');
+		// const today = dayjs();
+		// const deliveryDate = today.add(deliveryOption.deliveryDays, 'day');
+		// const dateString = deliveryDate.format('dddd, MMMM D');
+		const deliveryDate = getdeliveryDate(deliveryOption.deliveryDays);
 
 		cartSummaryHTML += `
   <div class="cart-item-container
@@ -26,7 +28,7 @@ export function renderOrderSummary() {
 								matchingProduct.id
 							}">
       <div class="delivery-date">
-        Delivery date: ${dateString}
+        Delivery date: ${deliveryDate}
       </div>
 
       <div class="cart-item-details-grid">
@@ -71,9 +73,11 @@ export function renderOrderSummary() {
 		let html = '';
 
 		deliveryOptions.forEach((deliveryOption) => {
-			const today = dayjs();
-			const deliveryDate = today.add(deliveryOption.deliveryDays, 'day');
-			const dateString = deliveryDate.format('dddd, MMMM D');
+			// const today = dayjs();
+			// const deliveryDate = today.add(deliveryOption.deliveryDays, 'day');
+			// const dateString = deliveryDate.format('dddd, MMMM D');
+
+			const deliveryDate = getdeliveryDate(deliveryOption.deliveryDays);
 
 			const priceString =
 				deliveryOption.priceCents === 0
@@ -96,7 +100,7 @@ export function renderOrderSummary() {
 
         <div>
           <div class="delivery-option-date">
-            ${dateString}
+            ${deliveryDate}
           </div>
           <div class="delivery-option-price">
             ${priceString} Shipping
