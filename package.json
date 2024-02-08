@@ -13,6 +13,7 @@
 	"author": "hjchen",
 	"license": "ISC",
 	"dependencies": {
+		"dayjs": "^1.11.10",
 		"uuid": "^9.0.1"
 	}
 }

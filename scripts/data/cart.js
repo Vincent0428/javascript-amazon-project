@@ -1,9 +1,7 @@
-export let cart;
+export let cart = cartLoadFromStorage();
 
-loadFromStorage();
-
-export function loadFromStorage() {
-	cart = JSON.parse(localStorage.getItem('cart'));
+function cartLoadFromStorage() {
+	let cart = JSON.parse(localStorage.getItem('cart'));
 
 	// 这里是说如果cart不存在，但[]即空的cart是存在的
 	if (!cart) {
@@ -20,9 +18,19 @@ export function loadFromStorage() {
 			},
 		];
 	}
+	return cart;
 }
 
-function saveToStorage() {
+export function getCart() {
+	return cart;
+}
+
+export function reSetCart(newCart) {
+	cart = newCart;
+	cartSaveToStorage();
+}
+
+function cartSaveToStorage() {
 	localStorage.setItem('cart', JSON.stringify(cart));
 }
 
@@ -43,17 +51,17 @@ export function addToCart(productId) {
 			deliveryOptionId: '1',
 		});
 	}
-	saveToStorage();
+	cartSaveToStorage();
 }
 
 export function removeFromCart(productId) {
 	cart = cart.filter((product) => product.productId !== productId);
-	saveToStorage();
+	cartSaveToStorage();
 }
 
 export function updateDeliveryOption(productId, deliveryOptionId) {
 	let matchingItem = cart.find((cartitem) => cartitem.productId === productId);
 	matchingItem.deliveryOptionId = deliveryOptionId;
 
-	saveToStorage();
+	cartSaveToStorage();
 }
