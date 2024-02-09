@@ -1,3 +1,4 @@
+import { addToCart, updateCartQuantity } from './data/cart.js';
 import { getDeliveryOption } from './data/deliveryOptions.js';
 import { orders } from './data/orders.js';
 import { ordersItems } from './data/ordersItems.js';
@@ -5,6 +6,7 @@ import { getProduct } from './data/products.js';
 import { getdeliveryDate } from './utils/Date_time.js';
 import { formatCurrency } from './utils/money.js';
 
+updateCartQuantity();
 renderPlacedOrders();
 
 function renderPlacedOrders() {
@@ -75,7 +77,7 @@ function orderItemsHTML(orderItems) {
               <div class="product-quantity">
                 Quantity: ${quantity}
               </div>
-              <button class="buy-again-button button-primary">
+              <button class="buy-again-button button-primary js-buy-again-button" data-product-id="${productId}">
                 <img class="buy-again-icon" src="images/icons/buy-again.png">
                 <span class="buy-again-message">Buy it again</span>
               </button>
@@ -111,3 +113,12 @@ function orderTotal(orderItems) {
 
 	return totalCents;
 }
+
+const addToCartButtons = document.querySelectorAll('.js-buy-again-button');
+addToCartButtons.forEach((button) => {
+	button.addEventListener('click', () => {
+		const productId = button.dataset.productId;
+		addToCart(productId);
+		updateCartQuantity();
+	});
+});

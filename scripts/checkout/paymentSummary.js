@@ -5,7 +5,6 @@ import { getProduct } from '../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import { renderOrderSummary } from './orderSummary.js';
 
-
 export function renderPaymentSummary() {
 	let productPriceCents = 0;
 	let shippingPriceCents = 0;
@@ -26,7 +25,7 @@ export function renderPaymentSummary() {
     <div class="payment-summary-title">Order Summary</div>
 
 					<div class="payment-summary-row">
-						<div>Items (3):</div>
+						<div>Items (${cart.length}):</div>
 						<div class="payment-summary-money">${formatCurrency(productPriceCents)}</div>
 					</div>
 
@@ -58,14 +57,10 @@ export function renderPaymentSummary() {
 	document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
 	document
 		.querySelector('.js-place-order-button')
-		.addEventListener('click', placeOrder);	
-	document
-		.querySelector('.js-place-order-button')
-		.addEventListener('click', renderOrderSummary);	
-	document
-		.querySelector('.js-place-order-button')
-		.addEventListener('click', renderPaymentSummary);	
-
+		.addEventListener('click', () => {
+			placeOrder();
+			renderOrderSummary();
+			renderPaymentSummary();
+			window.location.href = 'orders.html';
+		});
 }
-
-
