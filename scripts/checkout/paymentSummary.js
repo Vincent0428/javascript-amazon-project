@@ -67,3 +67,5 @@ export function renderPaymentSummary() {
 		.addEventListener('click', renderPaymentSummary);	
 
 }
+
+
