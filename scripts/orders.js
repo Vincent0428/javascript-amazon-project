@@ -1,3 +1,4 @@
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { addToCart, updateCartQuantity } from './data/cart.js';
 import { getDeliveryOption } from './data/deliveryOptions.js';
 import { orders } from './data/orders.js';
@@ -11,6 +12,13 @@ renderPlacedOrders();
 
 function renderPlacedOrders() {
 	let ordersHTML = '';
+
+	//将orders按降序排序
+	orders.sort((a, b) => {
+		const dateA = dayjs(a.orderDate);
+		const dateB = dayjs(b.orderDate);
+		return dateB.diff(dateA);
+	});
 
 	orders.forEach((order) => {
 		const orderId = order.orderId;
@@ -26,7 +34,7 @@ function renderPlacedOrders() {
             <div class="order-header-left-section">
               <div class="order-date">
                 <div class="order-header-label">Order Placed:</div>
-                <div>${orderDate}</div>
+                <div>${orderDate.substring(0, 10)}</div>
               </div>
               <div class="order-total">
                 <div class="order-header-label">Total:</div>

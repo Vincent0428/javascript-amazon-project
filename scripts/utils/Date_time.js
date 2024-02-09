@@ -13,9 +13,8 @@ export function getDateObjectfromString(dateString) {
 }
 
 export function getDateStringfromDateObject(dateObject) {
-	return dateObject.format('YYYY-MM-DD');
+	return dateObject.format('YYYY-MM-DD HH:mm:ss');
 }
 
-export const today = dayjs();
 
-console.log(dayjs());
+export const today = dayjs();
